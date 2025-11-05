@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albuquerque Music Events | Next 6 Months</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1 class="title">Albuquerque Music</h1>
+            <p class="subtitle">Discover live music events in ABQ for the next 6 months</p>
+        </header>
+
+        <!-- Check if we have events -->
+        {% if events %}
+            <!-- Events Grid -->
+            <div class="events-grid">
+                <!-- Loop through each event using Python/Jinja2 -->
+                {% for event in events %}
+                <div class="event-card">
+                    <!-- Event Image -->
+                    {% if event.image %}
+                        <img src="{{ event.image }}" alt="{{ event.name }}" class="event-image">
+                    {% else %}
+                        <img src="https://via.placeholder.com/400x240?text=No+Image" alt="No Image" class="event-image">
+                    {% endif %}
+
+                    <!-- Event Content -->
+                    <div class="event-content">
+                        <!-- Date and Time -->
+                        <span class="event-date">
+                            {{ event.date|format_date }}
+                            {% if event.time %}
+                                • {{ event.time }}
+                            {% endif %}
+                        </span>
+
+                        <!-- Event Name -->
+                        <h2 class="event-name">{{ event.name }}</h2>
+
+                        <!-- Venue -->
+                        <p class="event-venue">{{ event.venue }}</p>
+
+                        <!-- Address -->
+                        <p class="event-address">{{ event.address }}</p>
+
+                        <!-- Ticket Link -->
+                        <!-- Ticket Link -->
+                        <a href="{{ event.url }}" target="_blank" rel="noopener noreferrer" class="event-link">
+                        Get Tickets
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- No Events Found -->
+            <div class="no-events">
+                <p>No upcoming music events found in Albuquerque.</p>
+            </div>
+        {% endif %}
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Data provided by Ticketmaster</p>
+        </footer>
+    </div>
+</body>
+</html>
